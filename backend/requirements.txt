@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-multipart
+pandas
+numpy
+shapely
+opencv-python
+ultralytics
+lap
+scipy
+pytest
+httpx

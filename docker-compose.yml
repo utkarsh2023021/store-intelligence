@@ -1,0 +1,42 @@
+
+
+services:
+
+  backend:
+
+    build:
+      context: ./backend
+
+    container_name: storeiq-backend
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./backend:/app
+      - ./backend:/backend
+      - ./pipeline:/pipeline
+      - ./data:/data
+
+  frontend:
+
+    build:
+      context: ./dashboard
+
+    container_name: storeiq-dashboard
+
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - ./dashboard:/app
+      - /app/node_modules
+
+    stdin_open: true
+
+    environment:
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+
+    depends_on:
+      - backend

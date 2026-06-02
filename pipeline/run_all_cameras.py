@@ -18,19 +18,19 @@ VIDEOS = {
 
     "CAM1":
         ROOT /
-        "data/videos/CAM 1.mp4",
+        "data/videos/CAM1.mp4",
 
     "CAM2":
         ROOT /
-        "data/videos/CAM 2.mp4",
+        "data/videos/CAM2.mp4",
 
     "CAM3":
         ROOT /
-        "data/videos/CAM 3.mp4",
+        "data/videos/CAM3.mp4",
 
     "CAM5":
         ROOT /
-        "data/videos/CAM 5.mp4"
+        "data/videos/CAM5.mp4"
 }
 
 store = EventStore()

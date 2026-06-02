@@ -3,7 +3,7 @@ from pathlib import Path
 from fastapi import UploadFile
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 
 VIDEO_DIR = (
     ROOT /

@@ -8,34 +8,72 @@ from event_store import (
     EventStore
 )
 
+from progress_manager import (
+    update_progress
+)
+
 ROOT = (
     Path(__file__)
     .resolve()
     .parents[1]
 )
 
-VIDEOS = {
+VIDEO_DIR = (
+    ROOT /
+    "data" /
+    "videos"
+)
 
-    "CAM1":
-        ROOT /
-        "data/videos/CAM 1.mp4",
 
-    "CAM2":
-        ROOT /
-        "data/videos/CAM 2.mp4",
+def sort_key(path):
 
-    "CAM3":
-        ROOT /
-        "data/videos/CAM 3.mp4",
+    stem = path.stem
 
-    "CAM5":
-        ROOT /
-        "data/videos/CAM 5.mp4"
+    if stem.upper().startswith("CAM"):
+
+        suffix = stem[3:]
+
+        if suffix.isdigit():
+
+            return (
+                "CAM",
+                int(suffix)
+            )
+
+    return (
+        stem.upper(),
+        stem
+    )
+
+
+videos = {
+
+    path.stem:
+        path
+
+    for path in sorted(
+        VIDEO_DIR.glob("*.mp4"),
+        key=sort_key
+    )
 }
+
+if not videos:
+
+    update_progress(
+        None,
+        0,
+        "no videos found"
+    )
+
+    print(
+        "No videos found in data/videos"
+    )
+
+    raise SystemExit(0)
 
 store = EventStore()
 
-for camera_id, path in VIDEOS.items():
+for camera_id, path in videos.items():
 
     print(
         f"Processing {camera_id}"

@@ -122,15 +122,18 @@ export default function ZoneCalibration() {
             className="controls"
           >
 
-            <select
+            <input
+              list="camera-options"
               value={cameraId}
+              placeholder="Camera ID"
               onChange={(e) =>
                 setCameraId(
                   e.target.value
                 )
               }
-            >
+            />
 
+            <datalist id="camera-options">
               <option value="CAM1">
                 CAM1
               </option>
@@ -151,7 +154,7 @@ export default function ZoneCalibration() {
                 CAM5
               </option>
 
-            </select>
+            </datalist>
 
             <input
               type="text"

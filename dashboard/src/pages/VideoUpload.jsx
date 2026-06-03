@@ -8,8 +8,49 @@ import {
 
 export default function VideoUpload() {
 
+  const [cameras,setCameras] =
+    useState([
+      "CAM1",
+      "CAM2",
+      "CAM3",
+      "CAM4",
+      "CAM5"
+    ]);
+
   const [files,setFiles] =
     useState({});
+
+  const nextCameraId =
+    () => {
+
+      const usedNumbers =
+        cameras
+          .map(camera =>
+            camera.match(/^CAM(\d+)$/)
+          )
+          .filter(Boolean)
+          .map(match =>
+            Number(match[1])
+          );
+
+      const nextNumber =
+        usedNumbers.length > 0
+          ? Math.max(...usedNumbers) + 1
+          : cameras.length + 1;
+
+      return `CAM${nextNumber}`;
+    };
+
+  const addCamera =
+    () => {
+
+      setCameras(prev => [
+
+        ...prev,
+
+        nextCameraId()
+      ]);
+    };
 
   const handleChange = (
     camera,
@@ -31,6 +72,10 @@ export default function VideoUpload() {
         const camera
         in files
       ) {
+
+        if (!files[camera]) {
+          continue;
+        }
 
         await uploadVideo(
 
@@ -59,13 +104,7 @@ export default function VideoUpload() {
 
       {
 
-        [
-          "CAM1",
-          "CAM2",
-          "CAM3",
-          "CAM4",
-          "CAM5"
-        ].map(
+        cameras.map(
 
           camera => (
 
@@ -101,6 +140,24 @@ export default function VideoUpload() {
           )
         )
       }
+
+      <button
+        type="button"
+        onClick={addCamera}
+        aria-label="Add camera video"
+        title="Add camera video"
+        style={{
+          marginRight:12,
+          width:36,
+          height:36,
+          fontSize:24,
+          lineHeight:"24px"
+        }}
+      >
+
+        +
+
+      </button>
 
       <button
         onClick={uploadAll}

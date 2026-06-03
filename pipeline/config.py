@@ -1,9 +1,13 @@
 STORE_ID = "Brigade_Bangalore"
 
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+VIDEO_DIR = ROOT / "data" / "videos"
+
 CAMERAS = {
-    "CAM1": "data/videos/CAM1.mp4",
-    "CAM2": "data/videos/CAM2.mp4",
-    "CAM3": "data/videos/CAM3.mp4",
-    "CAM4": "data/videos/CAM4.mp4",
-    "CAM5": "data/videos/CAM5.mp4"
+    path.stem: str(path.relative_to(ROOT))
+    for path in sorted(VIDEO_DIR.glob("*.mp4"))
 }

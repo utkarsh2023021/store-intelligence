@@ -163,6 +163,12 @@ Expected output:
 
 ---
 
+## Output
+Detection pipeline outputs:
+- pipeline/zone_events.json       Or
+- data/output/events.jsonl        Or
+- Frontend Dashboard
+
 ## Author
 
 Built as part of the Purplle Store Intelligence Challenge.

@@ -7,6 +7,16 @@ EVENT_FILE = (
     "zone_events.json"
 )
 
+JSONL_OUTPUT_FILE = (
+    Path(__file__).parent.parent
+    /
+    "data"
+    /
+    "output"
+    /
+    "events.jsonl"
+)
+
 
 class EventStore:
 
@@ -35,3 +45,12 @@ class EventStore:
                 f,
                 indent=2
             )
+        
+        # Also save as JSONL format
+        JSONL_OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(
+            JSONL_OUTPUT_FILE,
+            "w"
+        ) as f:
+            for event in self.events:
+                f.write(json.dumps(event) + "\n")

@@ -75,6 +75,8 @@ backend/data/images/
 # Local/generated data outputs
 data/generated_events/
 data/*.json
+data/*.csv
+data/*.jsonl
 !data/camera_config.example.json
 !data/store_layout.example.json
 !data/zones.example.json

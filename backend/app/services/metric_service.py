@@ -10,17 +10,17 @@ def calculate_metrics(
         db.query(Event.visitor_id)
         .filter(
             Event.store_id == store_id,
-            Event.event_type == "ENTRY"
+            Event.event_type == "ZONE_ENTER"
         )
         .distinct()
         .count()
     )
 
-    billing = (
+    exits = (
         db.query(Event.visitor_id)
         .filter(
             Event.store_id == store_id,
-            Event.event_type == "BILLING_QUEUE_JOIN"
+            Event.event_type == "ZONE_EXIT"
         )
         .distinct()
         .count()
@@ -29,7 +29,8 @@ def calculate_metrics(
     dwell_events = (
         db.query(Event)
         .filter(
-            Event.event_type == "ZONE_DWELL"
+            Event.store_id == store_id,
+            Event.event_type == "ZONE_ENTER"
         )
         .all()
     )
@@ -45,11 +46,11 @@ def calculate_metrics(
     conversion_rate = 0
 
     if visitors:
-        conversion_rate = billing / visitors
+        conversion_rate = exits / visitors
 
     return {
         "visitors": visitors,
         "conversion_rate": round(conversion_rate, 3),
         "avg_dwell": round(avg_dwell, 2),
-        "queue_depth": billing
+        "queue_depth": exits
     }
